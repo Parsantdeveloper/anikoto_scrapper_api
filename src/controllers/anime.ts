@@ -5,6 +5,7 @@ import getAnime from '../extractor/getAnime.js';
 import scrapeHomePage from '../extractor/home.js';
 import scrapeAnimeDetailsPage from '../extractor/getAnimeDetails.js';
 import extractEpisodes from '../extractor/getAnimeEpisode.js';
+import extractServers from '../extractor/getServer.js';
 export default async function getAnimeController(req:Request , res:Response, next:NextFunction){
    
     try{
@@ -51,6 +52,28 @@ export async function getAnimeEpisodes(req:Request , res:Response, next:NextFunc
         const data =  extractEpisodes(response.data.result);
         res.status(200).json(data);
 
+    }catch(error){
+        next(error)
+    }
+}
+
+
+export async function getListOfServers(req:Request , res:Response, next:NextFunction) {
+    try{
+        const token  = req.query.token as string;
+        const response = await api.get(`/ajax/server/list?servers=${token}`);
+        const data =  extractServers(response.data.result);
+        res.status(200).json(data);
+    }catch(error){
+        next(error)
+    }
+}
+
+export async function getVideoDirectLink(req:Request , res:Response, next:NextFunction) {
+    try{
+        const token  = req.query.token as string;
+        const response = await api.get(`/ajax/server/?get=${token}`);
+        res.status(200).json(response.data.result);
     }catch(error){
         next(error)
     }
