@@ -1,6 +1,6 @@
 
 import express from "express";
-import getAnimeController, { getAnimeDetails, getAnimeEpisodes, getAnimeHome ,getListOfServers, getVideoDirectLink} from "../controllers/anime.js";
+import  {getAnimeController, getAnimeDetails, getAnimeEpisodes, getAnimeHome ,getListOfServers, getVideoDirectLink} from "../controllers/anime.js";
 
 const router = express.Router();
 

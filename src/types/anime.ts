@@ -13,3 +13,4 @@ export interface Anime{
         languages:string[],
         genres:string[]
 }
+
