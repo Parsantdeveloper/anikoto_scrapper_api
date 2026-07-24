@@ -7,6 +7,8 @@ import extractEpisodes from "../extractor/getAnimeEpisode.js";
 import extractServers from "../extractor/getServer.js";
 import { asyncHandler } from "../utils/async_handler.js";
 import  {sendSuccessResponse}  from "../utils/api_response.js";
+import getPopularSearch from "../extractor/getPopular.js";
+
 
 export const getAnimeController = asyncHandler(async (req: Request, res: Response) => {
   const keyword = req.query.keyword as string;
@@ -63,3 +65,12 @@ export const getVideoDirectLink = asyncHandler(async (req: Request, res: Respons
   );
 }); 
     
+
+export const getPopularSearches = asyncHandler(async (_req: Request, res: Response) => {
+   const response = await api.get("/");
+   const data = getPopularSearch(response.data);
+
+   return sendSuccessResponse(res, "Popular searches fetched successfully", data);
+
+
+});

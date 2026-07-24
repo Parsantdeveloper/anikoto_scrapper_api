@@ -10,7 +10,6 @@ import animeRoutes from "./routes/anime.js";
 export const app = express();
 
 dotenv.config();
-app.use("/api/anime", animeRoutes);
 
 app.use(
   cors({
@@ -19,9 +18,10 @@ app.use(
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );
-
 app.use(helmet());
 app.use(express.json());
+app.use("/api/anime", animeRoutes);
+
 app.use(requestLoggerMiddleware); // attaches req.log with requestId to every request
 
 
