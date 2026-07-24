@@ -1,19 +1,35 @@
 import * as cheerio from "cheerio";
- export default function getPopularSearch(html: string): string[] {
-  const $ = cheerio.load(html);
-  const searches: string[] = [];
 
-  $('.search-term .item').each((i, el) => {
-    // Get text content and remove trailing comma/whitespace
-    let raw = $(el).text().trim();
-    // Remove trailing comma and any surrounding spaces
-    raw = raw.replace(/,\s*$/, '').trim();
-    if (raw) searches.push(raw);
-  });
-
-  return searches;
+interface PopularSearchItem {
+  slug: string;
+  title: string;
 }
 
-// Example usage:
-// const html = '<!DOCTYPE html>...'; // your full HTML
-// console.log(getPopularSearch(html));
+export default function getPopularSearch(html: string): PopularSearchItem[] {
+  const $ = cheerio.load(html);
+  const results: PopularSearchItem[] = [];
+
+  $('.search-term .item').each((i, el) => {
+    const $el = $(el);
+    const href = $el.attr('href');
+    if (!href) return;
+
+    // Extract slug (last segment of the pathname)
+    let slug = '';
+    try {
+      slug = new URL(href).pathname.split('/').pop() || '';
+    } catch {
+      return;
+    }
+    if (!slug) return;
+
+    // Extract title (text without trailing comma)
+    const rawTitle = $el.text().trim();
+    const title = rawTitle.replace(/,\s*$/, '').trim();
+    if (!title) return;
+
+    results.push({ slug, title });
+  });
+
+  return results;
+}
