@@ -44,7 +44,7 @@ export default function scrapeHomePage(html: string): HomePageData {
   const $ = cheerio.load(html);
 
   // Helper to parse a single .item (poster + info) block
-  function parseItem(el: cheerio.Element): AnimeItem {
+  function parseItem(el: any): AnimeItem {
     const $item = $(el);
     const $poster = $item.find(".ani.poster").length
       ? $item.find(".ani.poster")

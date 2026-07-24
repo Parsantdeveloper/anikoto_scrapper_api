@@ -48,7 +48,7 @@ interface ScrapedAnimePage {
 }
 
 // ─── Helper: parse a sidebar item (trending / recommended) ───
-function parseSidebarItem($: cheerio.CheerioAPI, el: cheerio.Element): SidebarItem {
+function parseSidebarItem($: cheerio.CheerioAPI, el: any): SidebarItem {
   const $el = $(el);
   const link = $el.attr("href") || null;
   const image = $el.find("img").attr("src") || null;
