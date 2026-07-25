@@ -22,6 +22,14 @@ app.use(helmet());
 app.use(express.json());
 app.use("/api/anime", animeRoutes);
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Welcome to the Anime API!" });
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.use(requestLoggerMiddleware); // attaches req.log with requestId to every request
 
 
