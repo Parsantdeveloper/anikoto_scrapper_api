@@ -19,7 +19,7 @@ app.use(
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );
-app.use(helmet());
+// app.use(helmet());
 app.use(express.json());
 app.use("/api/anime", animeRoutes);
 
