@@ -9,6 +9,7 @@ interface Episode {
   timestamp: number | null; // data-timestamp (optional)
   sub: boolean;
   dub: boolean;
+  isFiller: boolean;        // true if the episode is a filler
   idsBase64: string;        // raw data-ids (base64 encoded)
   idsDecoded: string;       // decoded UTF-8 string (may be useful)
 }
@@ -35,6 +36,10 @@ export default function extractEpisodes(html: string): Episode[] {
     const idsBase64 = $a.attr("data-ids") || "";
     const title = $li.attr("title")?.trim() || "";
 
+    // Check the class attribute for the "filler" marker
+    const classAttr = $a.attr("class") || "";
+    const isFiller = classAttr.includes("filler");
+
     // decode base64 to string (optional)
     let idsDecoded = "";
     try {
@@ -52,6 +57,7 @@ export default function extractEpisodes(html: string): Episode[] {
       timestamp,
       sub,
       dub,
+      isFiller,
       idsBase64,
       idsDecoded,
     });
